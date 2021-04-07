@@ -1,3 +1,4 @@
 .idea/*
 dataset/*
 !dataset/.gitkeep
+*/__pycache__/*
