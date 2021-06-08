@@ -2,3 +2,5 @@
 dataset/*
 !dataset/.gitkeep
 */__pycache__/*
+glove.*.*.txt
+*/.idea/*
