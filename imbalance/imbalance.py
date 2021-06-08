@@ -26,12 +26,17 @@ def run_bilstm(X_train, X_test, y_train, y_test):
     X_test = tokenizer.texts_to_sequences(X_test)
 
     vocab_size = len(tokenizer.word_index) + 1
-
-
     maxlen = 200
 
     X_train = pad_sequences(X_train, padding='post', maxlen=maxlen)
     X_test = pad_sequences(X_test, padding='post', maxlen=maxlen)
+
+    # Smote
+    X_train, y_train = pr.Smote(X_train, y_train)
+    # Near_Miss
+    # X_train, y_train = pr.Near_miss(X_train, y_train)
+    # SmoteTomek
+    # X_train, y_train = pr.Smotetomek(X_train, y_train)
 
     embeddings_dictionary = dict()
 
@@ -123,6 +128,7 @@ if __name__ == "__main__":
 
 
     X_train, X_test, y_train, y_test = pr.sklearn_train_test(new_df)
+    X_train_lstm, X_test_lstm, y_train_lstm, y_test_lstm = X_train, X_test, y_train, y_test
 
     tfidf_x_train, tfidf_x_test = pr.tf_idf(X_train, X_test)
 
@@ -145,7 +151,6 @@ if __name__ == "__main__":
     knn = KNeighborsClassifier(n_neighbors=5)
     knn.fit(X_train, y_train)
     y_predicted = knn.predict(tfidf_x_test)
-
     pr.get_metrics(y_test, y_predicted)
 
     # Multinomial Naive Bayes
@@ -162,5 +167,4 @@ if __name__ == "__main__":
     y_predicted = logreg.predict(tfidf_x_test)
     pr.get_metrics(y_test, y_predicted)
 
-
-    run_bilstm(X_train, X_test, y_train, y_test)
+    run_bilstm(X_train_lstm, X_test_lstm, y_train_lstm, y_test_lstm)

@@ -135,6 +135,7 @@ def autolabel(rects, ax):
                     ha='center', va='bottom')
 
 def get_metrics(y_test, y_predicted):
+
     tp, fp, tn, fn = confusion_matrix(y_test, y_predicted)
     G_mean = np.sqrt((tp/(tp+fp)) * (tn/(tn+fp)))
     print('G-mean: %.4f' % G_mean)
